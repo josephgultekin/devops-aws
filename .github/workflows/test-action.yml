@@ -1,0 +1,16 @@
+name: Test My Action
+
+on: [push]
+
+jobs:
+  run-action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run My Action
+        uses: josephgultekin/ts-github-action@main
+        with:
+          name: "Joseph Gultekin"
+
