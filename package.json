@@ -1,0 +1,20 @@
+{
+  "name": "devops-aws",
+  "version": "1.0.0",
+  "description": "AWS DevOps Infrastructure as Code examples, experiments, etc.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josephgultekin/devops-aws.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/josephgultekin/devops-aws/issues"
+  },
+  "homepage": "https://github.com/josephgultekin/devops-aws#readme"
+}
