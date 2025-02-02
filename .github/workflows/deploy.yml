@@ -33,5 +33,5 @@ jobs:
       - name: Build CDK
         run: npm run build
 
-      - name: Deploy CDK Stack
-        run: cdk deploy --require-approval never
+      - name: Destroy existing stack
+        run: cdk destroy --force
