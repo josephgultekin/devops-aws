@@ -4,7 +4,11 @@
   "description": "AWS DevOps Infrastructure as Code examples, experiments, etc.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "cdk": "cdk",
+    "deploy": "cdk deploy",
+    "synth": "cdk synth"
   },
   "repository": {
     "type": "git",

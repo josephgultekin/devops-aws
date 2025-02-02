@@ -9,7 +9,7 @@
 			"Action": "sts:AssumeRoleWithWebIdentity",
 			"Condition": {
 				"StringLike": {
-					"token.actions.githubusercontent.com:sub": "repo:github.com/josephgultekin/devops-aws:*"
+					"token.actions.githubusercontent.com:sub": "repo:josephgultekin/devops-aws:*"
 				},
 				"StringEquals": {
                     "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
