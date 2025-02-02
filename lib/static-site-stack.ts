@@ -15,6 +15,12 @@ export class StaticSiteStack extends cdk.Stack {
       accessControl: BucketAccessControl.PUBLIC_READ,
       removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
+      blockPublicAccess: {
+        blockPublicAcls: false,
+        blockPublicPolicy: false,
+        ignorePublicAcls: false,
+        restrictPublicBuckets: false,
+      }
     });
 
     // Deploy site contents to S3 bucket

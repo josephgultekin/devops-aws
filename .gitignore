@@ -1,0 +1,14 @@
+# Ignore Node.js dependencies
+node_modules/
+
+# CDK output directory
+cdk.out/
+
+# Ignore build artifacts
+dist/
+*.js
+*.d.ts
+*.js.map
+
+# Environment files (if any)
+.env

@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/josephgultekin/devops-aws/issues"
   },
-  "homepage": "https://github.com/josephgultekin/devops-aws#readme"
+  "homepage": "https://github.com/josephgultekin/devops-aws#readme",
+  "dependencies": {
+    "aws-cdk-lib": "^2.177.0"
+  },
+  "type": "commonjs"
 }
