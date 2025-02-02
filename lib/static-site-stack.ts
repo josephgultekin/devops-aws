@@ -16,9 +16,9 @@ export class StaticSiteStack extends cdk.Stack {
       removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
       blockPublicAccess: {
-        blockPublicAcls: false,
+        blockPublicAcls: true,
         blockPublicPolicy: false,
-        ignorePublicAcls: false,
+        ignorePublicAcls: true,
         restrictPublicBuckets: false,
       }
     });
