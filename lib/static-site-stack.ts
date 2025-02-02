@@ -1,37 +1,47 @@
+// lib/static-site-stack.ts
 import * as cdk from 'aws-cdk-lib';
-import { Bucket, BucketAccessControl } from 'aws-cdk-lib/aws-s3';
-import { RemovalPolicy } from 'aws-cdk-lib';
+import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
+import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
 import { Construct } from 'constructs';
-import * as s3Deploy from 'aws-cdk-lib/aws-s3-deployment';
 
 export class StaticSiteStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    // Create an S3 bucket for the website
-    const siteBucket = new Bucket(this, 'StaticSiteBucket', {
-      websiteIndexDocument: 'index.html',
-      publicReadAccess: true,
-      accessControl: BucketAccessControl.PUBLIC_READ,
-      removalPolicy: RemovalPolicy.DESTROY,
+    // S3 Bucket
+    const siteBucket = new s3.Bucket(this, 'SiteBucket', {
+      bucketName: `my-static-site-${this.account}-${this.region}`,
+      publicReadAccess: false,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
-      blockPublicAccess: {
-        blockPublicAcls: true,
-        blockPublicPolicy: false,
-        ignorePublicAcls: true,
-        restrictPublicBuckets: false,
-      }
     });
 
-    // Deploy site contents to S3 bucket
-    new s3Deploy.BucketDeployment(this, 'DeployWebsite', {
-      sources: [s3Deploy.Source.asset('./site')],
+    // CloudFront Origin Access Identity
+    const originAccessIdentity = new cloudfront.OriginAccessIdentity(this, 'OAI');
+    siteBucket.grantRead(originAccessIdentity);
+
+    // CloudFront Distribution
+    const distribution = new cloudfront.Distribution(this, 'SiteDistribution', {
+      defaultRootObject: 'index.html',
+      defaultBehavior: {
+        origin: new origins.S3Origin(siteBucket, { originAccessIdentity }),
+        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+      },
+    });
+
+    // Deploy website files
+    new s3deploy.BucketDeployment(this, 'DeployWebsite', {
+      sources: [s3deploy.Source.asset('./site')],
       destinationBucket: siteBucket,
+      distribution,
+      distributionPaths: ['/*'],
     });
 
-    new cdk.CfnOutput(this, 'BucketWebsiteURL', {
-      value: siteBucket.bucketWebsiteUrl,
-      description: 'S3 Website URL',
+    new cdk.CfnOutput(this, 'CloudFrontURL', {
+      value: distribution.domainName,
     });
   }
 }
