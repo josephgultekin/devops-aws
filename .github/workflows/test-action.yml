@@ -13,4 +13,14 @@ jobs:
         uses: josephgultekin/ts-github-action@main
         with:
           name: "Joseph Gultekin"
+    
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npm test
+      - run: node --version
 
